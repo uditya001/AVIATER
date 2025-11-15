@@ -1,266 +1,225 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>AeroMatrix Flight Analytics</title>
-
-<!-- MAIN CSS -->
-<style>
-    body {
-      margin: 0;
-      font-family: 'Poppins', sans-serif;
-      background: linear-gradient(135deg, #0b1220, #101727, #182033);
-      color: white;
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Aviator — Login</title>
+  <style>
+    /* Theme colors based on the provided screenshot */
+    :root{
+      --bg-1: #0b0b0c; /* deep almost-black */
+      --bg-2: #141416; /* slightly lighter */
+      --card: rgba(255,255,255,0.04);
+      --muted: #bfc5c8;
+      --accent: #e61f45; /* bright pink/red seen on buttons */
+      --accent-2: #ff4766;
+      --glass: rgba(255,255,255,0.03);
+      --input-bg: rgba(255,255,255,0.02);
+      --success: #6ee7b7;
     }
 
-    header {
-      display: flex;
-      justify-content: center;
-      padding: 25px;
-      background: rgba(255,255,255,0.05);
-      backdrop-filter: blur(12px);
-      border-bottom: 1px solid rgba(255,255,255,0.1);
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family: Inter, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
+      background: radial-gradient(1200px 600px at 10% 10%, rgba(255,255,255,0.02), transparent),
+                  radial-gradient(900px 400px at 90% 90%, rgba(230,31,69,0.03), transparent),
+                  linear-gradient(180deg, var(--bg-1), var(--bg-2));
+      color:#fff;
+      -webkit-font-smoothing:antialiased;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding:32px;
     }
 
-    header h2 {
-      font-size: 38px;
-      font-weight: 800;
-      letter-spacing: 2px;
-      background: linear-gradient(135deg,#00f8c2,#4cc9f0,#4361ee);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      text-shadow: 0 0 15px rgba(0,255,200,0.5);
-      animation: fadeTitle 1s ease-out;
+    .container{
+      width:100%;
+      max-width:420px;
+      background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+      border-radius:14px;
+      padding:28px;
+      box-shadow: 0 8px 30px rgba(2,6,23,0.6);
+      border: 1px solid rgba(255,255,255,0.03);
+      backdrop-filter: blur(6px);
     }
 
-    @keyframes fadeTitle {
-      from { opacity: 0; transform: translateY(-15px); }
-      to { opacity: 1; transform: translateY(0); }
+    .logo{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      margin-bottom:14px;
+    }
+    .logo svg{width:44px;height:44px}
+    .brand{
+      font-weight:700;
+      letter-spacing: -0.5px;
+      font-size:20px;
+      color:var(--accent-2);
+    }
+    .brand small{display:block;font-weight:500;color:var(--muted);font-size:12px}
+
+    h1{
+      margin:6px 0 18px 0;
+      font-size:20px;
+      color:#fff;
+    }
+    p.lead{
+      margin:0 0 20px 0;
+      color:var(--muted);
+      font-size:13px;
+      line-height:1.35;
     }
 
-    .container {
-      max-width: 1000px;
-      margin: 20px auto;
-      padding: 20px;
+    form{display:flex;flex-direction:column;gap:12px}
+    .field{
+      display:flex;
+      flex-direction:column;
+      gap:8px;
+    }
+    label{font-size:12px;color:var(--muted)}
+    input[type="text"], input[type="tel"], input[type="password"]{
+      width:100%;
+      padding:12px 14px;
+      border-radius:10px;
+      border:1px solid rgba(255,255,255,0.04);
+      background:var(--input-bg);
+      color:#fff;
+      outline:none;
+      font-size:15px;
+      transition:box-shadow .18s, border-color .18s, transform .12s;
+    }
+    input::placeholder{color:rgba(255,255,255,0.35)}
+    input:focus{box-shadow:0 6px 18px rgba(230,31,69,0.12); border-color:rgba(230,31,69,0.55)}
+
+    .row{display:flex;gap:12px}
+    .col{flex:1}
+
+    .password-wrap{position:relative}
+    .toggle-pass{
+      position:absolute;right:10px;top:50%;transform:translateY(-50%);
+      background:none;border:none;color:var(--muted);cursor:pointer;padding:6px;border-radius:6px
     }
 
-    .game-box,
-    .payment-box,
-    .wallet-box {
-      background: rgba(255,255,255,0.08);
-      backdrop-filter: blur(10px);
-      padding: 20px;
-      border-radius: 15px;
-      border: 1px solid rgba(255,255,255,0.12);
-      margin-top: 20px;
+    .action{
+      margin-top:6px;
+      display:flex;flex-direction:column;gap:12px
     }
 
-    .multiplier {
-      font-size: 42px;
-      font-weight: bold;
-      margin-top: 15px;
+    .btn{
+      display:inline-block;text-align:center;padding:12px 14px;border-radius:12px;font-weight:600;
+      background:linear-gradient(180deg,var(--accent), var(--accent-2));
+      color:white;border:none;cursor:pointer;font-size:16px;box-shadow:0 8px 20px rgba(230,31,69,0.18);
+    }
+    .btn.secondary{
+      background:transparent;color:var(--muted);border:1px solid rgba(255,255,255,0.04);
+      box-shadow:none;font-weight:600;padding:10px 12px;border-radius:10px
     }
 
-    .plane {
-      position: absolute;
-      bottom: 20px;
-      width: 50px;
-      transition: left 0.1s linear;
-    }
+    .small{font-size:13px;color:var(--muted);text-align:center;margin-top:8px}
 
-    .track {
-      position: relative;
-      height: 100px;
-      background: #222;
-      margin-top: 20px;
-      border-radius: 10px;
-      overflow: hidden;
-    }
+    .awards{display:flex;gap:10px;align-items:center;justify-content:center;margin-top:18px;opacity:0.6}
+    .awards img{height:34px;filter:grayscale(1) brightness(.9)}
 
-    .controls button {
-      padding: 12px 25px;
-      margin: 5px;
-      border: none;
-      border-radius: 10px;
-      cursor: pointer;
-      background: #1f8ef1;
-      font-size: 16px;
-      color: white;
-      font-weight: 600;
-    }
+    .foot{margin-top:12px;font-size:12px;color:rgba(255,255,255,0.14);text-align:center}
 
-    /* Wallet UI */
-    .wallet-balance {
-      font-size: 28px;
-      font-weight: 700;
-      color: #00f8c2;
-      text-shadow: 0 0 12px rgba(0,255,200,0.4);
+    /* responsive */
+    @media (max-width:420px){
+      .container{padding:20px;border-radius:12px}
     }
-
-    .pay-btn {
-      padding: 12px;
-      width: 100%;
-      background: linear-gradient(135deg,#00d084,#00b46f);
-      border: none;
-      border-radius: 10px;
-      font-size: 18px;
-      font-weight: bold;
-      cursor: pointer;
-      margin-top: 10px;
-      color: #001a10;
-    }
-</style>
+  </style>
 </head>
 <body>
-
-<header>
-  <h2>AeroMatrix Flight Analytics</h2>
-</header>
-
-<div class="container">
-
-  <!-- WALLET SYSTEM -->
-  <div class="wallet-box">
-    <h3>💼 Your Wallet Balance</h3>
-    <div class="wallet-balance">₹<span id="wallet">0</span></div>
-  </div>
-
-  <!-- GAME BOX -->
-  <div class="game-box">
-    <div id="status">Ready for takeoff ✈️</div>
-    <div class="multiplier" id="multiplier">1.00x</div>
-
-    <div class="track">
-      <img id="plane" class="plane"
-        src="data:image/svg+xml;utf8,
-        <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'>
-        <path fill='%23FFD166' d='M2 12l20-8-8 20-2-8-10-4z'/></svg>">
+  <div class="container" role="main">
+    <div class="logo">
+      <!-- small plane + circle logo -->
+      <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <circle cx="12" cy="12" r="11" fill="rgba(255,255,255,0.02)" stroke="rgba(255,255,255,0.04)" />
+        <path d="M2 12c5 1 8 3 10 3l9-7-4 9-2-9-9 4z" fill="url(#g)"/>
+        <defs>
+          <linearGradient id="g" x1="0" x2="1">
+            <stop offset="0" stop-color="#ff6d85" />
+            <stop offset="1" stop-color="#e61f45" />
+          </linearGradient>
+        </defs>
+      </svg>
+      <div>
+        <div class="brand">Aviator</div>
+        <small style="color:var(--muted);">Play & Win</small>
+      </div>
     </div>
 
-    <div class="controls" style="margin-top:20px;">
-      <button id="start">Start Flight</button>
-      <button id="cashout">Cash Out</button>
-      <button id="reset">Reset</button>
+    <h1>Welcome back</h1>
+    <p class="lead">Log in to continue. Use your username, mobile number and set a secure password.</p>
+
+    <form id="loginForm" autocomplete="on" onsubmit="return handleSubmit(event)">
+      <div class="field">
+        <label for="username">Username</label>
+        <input id="username" name="username" type="text" placeholder="e.g. sky_pilot" required />
+      </div>
+
+      <div class="field">
+        <label for="mobile">Mobile number</label>
+        <input id="mobile" name="mobile" type="tel" inputmode="numeric" pattern="\d{10}" placeholder="10-digit mobile number" required />
+      </div>
+
+      <div class="field password-wrap">
+        <label for="password">Set password</label>
+        <input id="password" name="password" type="password" minlength="6" placeholder="Create a strong password" required />
+        <button type="button" class="toggle-pass" aria-label="Show password" onclick="togglePassword()">👁️</button>
+      </div>
+
+      <div class="action">
+        <button class="btn" type="submit">Login</button>
+        <button type="button" class="btn secondary" onclick="clearForm()">Clear</button>
+      </div>
+
+      <div class="small">By continuing you agree to our Terms & Privacy.</div>
+    </form>
+
+    <div class="awards" aria-hidden="true">
+      <!-- decorative placeholders similar to the image --><img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='120' height='34'><rect width='120' height='34' fill='rgba(255,255,255,0.04)' rx='6'/></svg>" alt="award"/>
+      <img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='120' height='34'><rect width='120' height='34' fill='rgba(255,255,255,0.03)' rx='6'/></svg>" alt="award"/>
     </div>
+
+    <div class="foot">© <span id="year"></span> Aviator — All rights reserved</div>
   </div>
 
-  <!-- PAYMENT BOX -->
-  <div class="payment-box">
-    <h3>💳 Add Balance</h3>
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
 
-    <label>Choose Payment Method:</label>
-    <select id="payMethod">
-      <option value="upi">UPI</option>
-      <option value="card">Debit/Credit Card</option>
-      <option value="wallet">Wallet</option>
-      <option value="crypto">Crypto (USDT)</option>
-    </select>
-
-    <label>Enter Amount (₹):</label>
-    <input type="number" id="amount" placeholder="Enter amount here">
-
-    <button class="pay-btn" onclick="makePayment()">Add Money</button>
-
-    <p id="payStatus" style="margin-top:15px; font-size:18px;"></p>
-  </div>
-
-</div>
-
-<!-- JAVASCRIPT -->
-<script>
-
-// WALLET SYSTEM
-let wallet = 0;
-let multiplier = 1;
-let flightInterval;
-let planeX = 0;
-let crashed = false;
-
-// Update Wallet UI
-function updateWallet() {
-  document.getElementById("wallet").innerText = wallet.toFixed(2);
-}
-
-// PAYMENT SYSTEM
-function makePayment() {
-  let amount = parseFloat(document.getElementById("amount").value);
-  let status = document.getElementById("payStatus");
-
-  if (isNaN(amount) || amount <= 0) {
-    status.innerHTML = "❌ Enter a valid amount";
-    return;
-  }
-
-  wallet += amount;
-  updateWallet();
-
-  status.innerHTML = `✔️ ₹${amount} added successfully!`;
-  document.getElementById("amount").value = "";
-}
-
-// GAME LOGIC
-document.getElementById("start").onclick = () => {
-  if (flightInterval) return;
-
-  crashed = false;
-  multiplier = 1;
-  planeX = 0;
-
-  document.getElementById("status").innerText = "🛫 Flight Started";
-  document.getElementById("multiplier").innerText = multiplier.toFixed(2) + "x";
-
-  let crashPoint = (Math.random() * 5 + 1).toFixed(2);
-
-  flightInterval = setInterval(() => {
-
-    if (multiplier >= crashPoint) {
-      clearInterval(flightInterval);
-      flightInterval = null;
-      crashed = true;
-      document.getElementById("status").innerText = `💥 Crashed at ${crashPoint}x`;
-      return;
+    function togglePassword(){
+      const p = document.getElementById('password');
+      if(p.type === 'password'){
+        p.type = 'text';
+      } else p.type = 'password';
     }
 
-    multiplier += 0.02;
-    planeX += 5;
+    function clearForm(){
+      document.getElementById('loginForm').reset();
+    }
 
-    document.getElementById("multiplier").innerText = multiplier.toFixed(2) + "x";
-    document.getElementById("plane").style.left = planeX + "px";
+    function handleSubmit(e){
+      e.preventDefault();
+      const username = document.getElementById('username').value.trim();
+      const mobile = document.getElementById('mobile').value.trim();
+      const password = document.getElementById('password').value;
 
-  }, 100);
-};
+      // basic validation for mobile (10 digits)
+      if(!/^\d{10}$/.test(mobile)){
+        alert('Please enter a valid 10-digit mobile number');
+        return false;
+      }
+      if(password.length < 6){
+        alert('Password must be at least 6 characters');
+        return false;
+      }
 
-// CASHOUT
-document.getElementById("cashout").onclick = () => {
-  if (crashed || !flightInterval) return;
-
-  let winAmount = multiplier * 10; // FIXED BET OF ₹10 (you can modify)
-  wallet += winAmount;
-
-  updateWallet();
-  clearInterval(flightInterval);
-  flightInterval = null;
-
-  document.getElementById("status").innerText =
-    `🟢 Cashed out at ${multiplier.toFixed(2)}x — Won ₹${winAmount.toFixed(2)}`;
-};
-
-// RESET GAME
-document.getElementById("reset").onclick = () => {
-  multiplier = 1;
-  planeX = 0;
-  crashed = false;
-
-  clearInterval(flightInterval);
-  flightInterval = null;
-
-  document.getElementById("plane").style.left = "0px";
-  document.getElementById("multiplier").innerText = "1.00x";
-  document.getElementById("status").innerText = "Ready for takeoff ✈️";
-};
-
-</script>
-
+      // This is a demo-only client-side handler. Replace with real auth call.
+      alert(`Logging in as ${username} (mobile: ${mobile}) — demo only`);
+      return false;
+    }
+  </script>
 </body>
 </html>
