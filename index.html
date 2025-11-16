@@ -172,9 +172,9 @@
       </div>
 
       <div class="action">
-        <a href="https://work-with-kaushal.github.io/home-page/" >
+        
         <button class="btn" type="submit">Login</button>
-          </a>
+          
         <button type="button" class="btn secondary" onclick="clearForm()">Clear</button>
       </div>
 
@@ -203,21 +203,33 @@
       document.getElementById('loginForm').reset();
     }
 
-    function handleSubmit(e){
-      e.preventDefault();
-      const username = document.getElementById('username').value.trim();
-      const mobile = document.getElementById('mobile').value.trim();
-      const password = document.getElementById('password').value;
+   function handleSubmit(e){
+  e.preventDefault();
 
-      // basic validation for mobile (10 digits)
-      if(!/^\d{10}$/.test(mobile)){
-        alert('Please enter a valid 10-digit mobile number');
-        return false;
-      }
-      if(password.length < 6){
-        alert('Password must be at least 6 characters');
-        return false;
-      }
+  const username = document.getElementById('username').value.trim();
+  const mobile = document.getElementById('mobile').value.trim();
+  const password = document.getElementById('password').value;
+
+  if(username === ""){
+    alert("Please enter your username");
+    return false;
+  }
+
+  if(!/^\d{10}$/.test(mobile)){
+    alert('Please enter a valid 10-digit mobile number');
+    return false;
+  }
+
+  if(password.length < 6){
+    alert('Password must be at least 6 characters');
+    return false;
+  }
+
+  // ✅ If everything is valid → Redirect to next page
+  window.location.href = "https://work-with-kaushal.github.io/home-page/";
+  return true;
+}
+
 
     }
   </script>
